@@ -1,0 +1,14 @@
+{
+  "name": "online-compiler",
+  "version": "1.0.0",
+  "description": "Defines api routes to compile code and store code into database with login and logout services.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kushal Pandya",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}

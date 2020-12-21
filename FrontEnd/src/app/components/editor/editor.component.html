@@ -1,0 +1,69 @@
+<div class="container my-2">
+    <div class="head">
+        <div class = "left">
+            <span class="badge badge-dark"><i class="fa fa-user-secret" aria-hidden="true"></i> Anonymous Session</span>
+            &nbsp;
+            <!-- Language Selector -->
+            <select (change)="setMode($event.target.value)">
+                <option [value]="mode['name']" *ngFor="let mode of modes">{{mode['caption']}}</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- Theme Selector -->
+            <select (change)="setTheme($event.target.value)">
+                <option [value]="curTheme['theme']"  *ngFor="let curTheme of themes">{{curTheme['caption']}}</option>
+            </select>
+        </div>
+
+        <!-- Code Beautify And Clear Editor -->
+        <div class = "right">
+            <a data-toggle="tooltip" data-placement="top" title="Clear Code"  (click)="clearCode()"><i class="fas fa-trash"></i></a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a  (click)="beautifyContent()"><i class="fas fa-indent"></i></a>
+        </div>
+    </div>
+
+    <br/><br/>
+    <!-- the code editor class="code-editor w-100 h-100 border border-primary"-->
+    <div id="editor"  #codeEditor></div>
+
+    <div class="footer">
+        <button *ngIf = "!hitCompile" type="button" class="right btn btn-success btn-sm" (click)="compileRun()">Compile And Run</button>
+        <br />
+        <i class="fa fa-cog fa-spin icon-spin"></i> Compiling...
+        <!-- input box -->
+        <div *ngIf = "!hitCompile" class="row mt-4">
+            <div class="col">
+                <button type="button" class="btn footer-item rel-tooltip" (click)="toggleStdin()" data-toggle="button" title="Specify input (stdin)" id="button-input">
+                    <i class="fas fa-inbox"></i>&nbsp; stdin </button>
+                <div *ngIf="stdInputEnabled" class="label-box border"><span class="mx-4 font-weight-light">Input</span></div>
+                <textarea *ngIf="stdInputEnabled" [(ngModel)] = "stdin" class="form-control input" rows="6"  aria-label="input-textarea"></textarea>
+                {{stdin}}
+            </div>
+        </div>
+
+        <div style="background-color:#eee">
+            <div [style]="tmpStyle">{{genResult}}</div> Execution Time - 0.08sec Memory - {{memoryUsage}}
+        </div>
+        
+        <!-- output box -->
+        <div *ngIf = "hitCompile" class="row mt-4">
+            <div class="col">
+                <i class="fas fa-inbox"></i>&nbsp; stdin
+                <hr /> 
+                <p>{{stdin}}</p>
+                <br/>
+                <div *ngIf = "!isSuccess">
+                    compilation info
+                    <hr /> 
+                    <!-- add compile info in here if there're any -->
+                    <p>{{stderr}}</p>
+                    <br/>    
+                </div>
+                <i class="fas fa-cogs"></i>    Output
+                <hr /> 
+                <p>{{stdout}}</p>
+                <!-- <textarea  [(ngModel)] = "stdout" class="form-control output" rows="6"  disabled="true" aria-label="output-textarea"></textarea> -->
+            </div>
+        </div>
+    </div>
+</div>
